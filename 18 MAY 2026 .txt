@@ -1,0 +1,59 @@
+CREATE DATABASE IF NOT EXISTS faceprep;
+USE faceprep;
+
+CREATE TABLE IF NOT EXISTS worker (
+    worker_id INT NOT NULL PRIMARY KEY,
+    First_name CHAR(25),
+    Last_name CHAR(25),
+    salary INT(15),
+    joining_date DATETIME,
+    department CHAR(25)
+);
+
+INSERT INTO worker (worker_id, First_name, Last_name, salary, joining_date, department) VALUES
+(1, 'Monika', 'Arora', 100000, '2014-02-20 09:00:00', 'HR'),
+(2, 'Niharika', 'Verma', 80000, '2014-06-11 09:00:00', 'Admin'),
+(3, 'Vishal', 'Singhal', 300000, '2014-02-20 09:00:00', 'HR'),
+(4, 'Amitabh', 'Singh', 500000, '2014-02-20 09:00:00', 'Admin'),
+(5, 'Vivek', 'Bhati', 500000, '2014-06-11 09:00:00', 'Admin'),
+(6, 'Vipul', 'Diwan', 200000, '2014-06-11 09:00:00', 'Account'),
+(7, 'Satish', 'Kumar', 75000, '2014-01-20 09:00:00', 'Account'),
+(8, 'Geetika', 'Chauhan', 90000, '2014-04-11 09:00:00', 'Admin')
+ON DUPLICATE KEY UPDATE worker_id=worker_id;
+
+CREATE TABLE IF NOT EXISTS class (
+    class_id INT PRIMARY KEY,
+    class_name VARCHAR(50)
+);
+
+INSERT INTO class (class_id, class_name) VALUES 
+(5, 'Alpha')
+ON DUPLICATE KEY UPDATE class_id=class_id;
+
+SELECT * FROM worker;
+
+UPDATE worker 
+SET First_name = 'Jayanth', Last_name = 'V' 
+WHERE worker_id = 1;
+
+UPDATE worker 
+SET salary = salary + 5000;
+
+DELETE FROM worker 
+WHERE worker_id = 8;
+
+SELECT * FROM worker;
+
+SET autocommit = 0;
+START TRANSACTION;
+
+SAVEPOINT B;
+
+INSERT INTO class (class_id, class_name) VALUES (7, 'Bravo');
+
+SAVEPOINT C;
+
+SELECT * FROM class;
+
+COMMIT;
+SET autocommit = 1;

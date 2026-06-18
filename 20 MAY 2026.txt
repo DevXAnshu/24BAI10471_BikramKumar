@@ -1,0 +1,47 @@
+CREATE DATABASE IF NOT EXISTS faceprep;
+USE faceprep;
+
+CREATE TABLE IF NOT EXISTS category (
+    cid INT PRIMARY KEY,
+    cname VARCHAR(100) NOT NULL
+);
+
+INSERT INTO category (cid, cname) VALUES 
+(101, 'electronics'),
+(102, 'Home Appliances')
+ON DUPLICATE KEY UPDATE cid=cid;
+
+CREATE TABLE IF NOT EXISTS products (
+    pid INT PRIMARY KEY,
+    pname VARCHAR(100) NOT NULL,
+    cid INT,
+    FOREIGN KEY (cid) REFERENCES category(cid)
+);
+
+CREATE TABLE IF NOT EXISTS Persons (
+    PersonID INT,
+    LastName VARCHAR(25),
+    FirstName VARCHAR(25),
+    Age INT
+);
+
+DESC Persons;
+
+INSERT INTO Persons (PersonID, LastName, FirstName, Age) VALUES 
+(101, 'V', 'Jayanth', NULL);
+
+SELECT * FROM Persons;
+
+ALTER TABLE Persons ADD UNIQUE (Age);
+
+ALTER TABLE Persons DROP CONSTRAINT Age;
+
+DROP TABLE IF EXISTS Persons;
+
+CREATE TABLE Persons (
+    Age INT NOT NULL,
+    CHECK (Age >= 18 AND Age <= 23)
+);
+
+INSERT INTO Persons (Age) VALUES 
+(20);

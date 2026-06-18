@@ -1,0 +1,18 @@
+public void truncate_data() {
+	    DB_Connection obj_DB_Connection = new DB_Connection();
+	    Connection connection = obj_DB_Connection.get_connection();
+	    PreparedStatement ps = null;
+
+	    try {
+	        String query = "truncate table student";
+	        ps = connection.prepareStatement(query);
+
+	        System.out.println(ps);
+
+	        ps.executeUpdate();
+	        System.out.println("All records deleted successfully.");
+
+	    } catch (Exception e) {
+	        System.out.println(e);
+	    }
+	}

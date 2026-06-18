@@ -1,0 +1,55 @@
+-- Database Selection Context
+USE faceprep;
+
+-- 1. Create the Worker Table
+CREATE TABLE Worker (
+    WORKER_ID INT NOT NULL PRIMARY KEY,
+    FIRST_NAME CHAR(25),
+    LAST_NAME CHAR(25),
+    SALARY INT(15),
+    JOINING_DATE DATETIME,
+    DEPARTMENT CHAR(25)
+);
+
+-- 2. Insert Sample Records
+-- (Note: Date strings converted to standard YYYY-MM-DD HH:MM:SS format for execution)
+INSERT INTO Worker 
+(WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES
+(001, 'Monika', 'Arora', 100000, '2014-02-20 09:00:00', 'HR'),
+(002, 'Niharika', 'Verma', 80000, '2014-06-11 09:00:00', 'Admin'),
+(003, 'Vishal', 'Singhal', 300000, '2014-02-20 09:00:00', 'HR'),
+(004, 'Amitabh', 'Singh', 500000, '2014-02-20 09:00:00', 'Admin'),
+(005, 'Vivek', 'Bhati', 500000, '2014-06-11 09:00:00', 'Admin'),
+(006, 'Vipul', 'Diwan', 200000, '2014-06-11 09:00:00', 'Account'),
+(007, 'Satish', 'Kumar', 75000, '2014-01-20 09:00:00', 'Account'),
+(008, 'Geetika', 'Chauhan', 90000, '2014-04-11 09:00:00', 'Admin');
+
+-- 3. Table Modifications (DDL Queries)
+ALTER TABLE Worker ADD country VARCHAR(20);
+ALTER TABLE Worker DROP COLUMN country;
+RENAME TABLE Worker TO employee;
+
+-- 4. Data Manipulation & Aggregations (DML & Select Queries)
+SELECT * FROM employee;
+SELECT * FROM Worker; -- (Valid if table wasn't renamed to employee)
+
+UPDATE Worker SET salary = salary + 1000000;
+DELETE FROM Worker;
+
+UPDATE employee 
+SET first_name = 'niharikaa', salary = 100000 
+WHERE department = 'Admin';
+
+SELECT * FROM Worker WHERE DEPARTMENT NOT IN ('HR', 'ADMIN');
+
+-- Aggregations & Group By
+SELECT MAX(salary) AS Highly_Paid_Emp FROM Worker;
+
+SELECT count(salary) AS minSal, department 
+FROM Worker 
+GROUP BY department;
+
+SELECT count(department), department 
+FROM Worker 
+GROUP BY department 
+HAVING count(department) >= 2;
